@@ -32,7 +32,7 @@ class ProductDataTable extends DataTable
      */
     public function query(Product $model)
     {
-        return $model->newQuery();
+        return $model->newQuery()->with('buyers');
     }
 
     /**
@@ -47,13 +47,6 @@ class ProductDataTable extends DataTable
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->orderBy(1);
-//                    ->buttons(
-//                        Button::make('create'),
-//                        Button::make('export'),
-//                        Button::make('print'),
-//                        Button::make('reset'),
-//                        Button::make('reload')
-//                    );
     }
 
     /**
@@ -68,7 +61,6 @@ class ProductDataTable extends DataTable
             'product_name',
             'sku_code',
             'price',
-//            'image'
         ];
     }
 
