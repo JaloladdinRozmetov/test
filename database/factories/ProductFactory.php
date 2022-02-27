@@ -25,7 +25,7 @@ class ProductFactory extends Factory
            'product_name' => $this->faker->realText(12),
             'sku_code' => $this->faker->regexify('[a-z0-9]{6}'),
             'price' => $this->faker->randomFloat(5, 10000, 90000),
-            'image' =>$this->faker->image($dir = null, $width = 640, $height = 480, $category = null, $fullPath = true, $randomize = true, $word = null),
+            'image' =>'',
         ];
     }
 }

@@ -12,7 +12,9 @@ class Buyer extends Model
 
     protected $table = 'buyers';
 
-    public function getBuyerProducts(): HasMany
+    protected $fillable = ["first_name", "last_name", "phone_number","email","image","code"];
+
+    public function getProducts(): HasMany
     {
         return $this->hasMany(BuyerProduct::class, 'buyer_id');
     }
