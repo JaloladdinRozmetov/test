@@ -21,7 +21,13 @@ class ProductDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
-            ->addColumn('action', 'product.action');
+            ->addColumn('action', function($row)
+            {
+                $urlDelete = route('product.destroy',['id' => $row->id]);
+                $urlUpdate = route("product.edit", ['id' => $row->id]);
+                return "<a href='{$urlUpdate}' class='edit btn btn-success btn-sm'>Edit</a>
+                        <a href='{$urlDelete}' class='delete btn btn-danger btn-sm'>Delete</a>";
+            });
     }
 
     /**
@@ -32,7 +38,7 @@ class ProductDataTable extends DataTable
      */
     public function query(Product $model)
     {
-        return $model->newQuery()->with('buyers');
+        return $model->newQuery();
     }
 
     /**
@@ -61,6 +67,7 @@ class ProductDataTable extends DataTable
             'product_name',
             'sku_code',
             'price',
+            'action',
         ];
     }
 

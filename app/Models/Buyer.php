@@ -2,11 +2,18 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
-
+/**
+ * Class Buyer
+ * @package App\Models
+ * @property Collection|BuyerProduct[] buyerProducts
+ * @property string image
+ */
 class Buyer extends Model
 {
     use HasFactory;
@@ -15,8 +22,8 @@ class Buyer extends Model
 
     protected $fillable = ["first_name", "last_name", "phone_number","email","image","code"];
 
-    public function products():belongsToMany
+    public function buyerProducts(): HasMany
     {
-        return $this->belongsToMany(Product::class, 'buyer_products','buyer_id','product_id');
+        return $this->hasMany(BuyerProduct::class, 'buyer_id', 'id');
     }
 }

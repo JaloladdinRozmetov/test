@@ -3,11 +3,8 @@
 namespace App\DataTables;
 
 use App\Models\Buyer;
-use Yajra\DataTables\Html\Button;
-use Yajra\DataTables\Html\Column;
-use Yajra\DataTables\Html\Editor\Editor;
-use Yajra\DataTables\Html\Editor\Fields;
-use Yajra\DataTables\Services\DataTable;
+use App\Models\BuyerProduct;
+use Yajra\DataTables\{DataTableAbstract, Html\Builder, Services\DataTable};
 
 class BuyerDataTable extends DataTable
 {
@@ -15,13 +12,33 @@ class BuyerDataTable extends DataTable
      * Build DataTable class.
      *
      * @param mixed $query Results from query() method.
-     * @return \Yajra\DataTables\DataTableAbstract
+     * @return DataTableAbstract
      */
-    public function dataTable($query)
+    public function dataTable($query): DataTableAbstract
     {
         return datatables()
             ->eloquent($query)
-            ->addColumn('action', 'buyer.action');
+            ->addColumn('count', function (Buyer $buyer) {
+                return $buyer->buyerProducts->map(function (BuyerProduct $buyerProduct) {
+                    return $buyerProduct->products->id;
+                })->count();
+            })
+            ->addColumn('image', function (Buyer $buyer) {
+                $asset = asset('buyer/'.$buyer->image);
+                return "<img src='{$asset}' class='img-circle'>";
+            })
+            ->addColumn('price', function (Buyer $buyer) {
+                return $buyer->buyerProducts->map(function (BuyerProduct $buyerProduct) {
+                    return $buyerProduct->products->price;
+                })->sum();
+            })
+            ->addColumn('action', function($row)
+            {
+                $urlDelete = route('buyer.destroy',['id' => $row->id]);
+                $urlUpdate = route("buyer.edit", ['id' => $row->id]);
+                return "<a href='{$urlUpdate}' class='edit btn btn-success btn-sm'>Edit</a>
+                        <a href='{$urlDelete}' class='delete btn btn-danger btn-sm'>Delete</a>";
+            });
     }
 
     /**
@@ -30,17 +47,17 @@ class BuyerDataTable extends DataTable
      * @param \App\Models\Buyer $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Buyer $model)
+    public function query(Buyer $model): \Illuminate\Database\Eloquent\Builder
     {
-        return $model->newQuery();
+        return $model->query()->with('buyerProducts');
     }
 
     /**
      * Optional method if you want to use html builder.
      *
-     * @return \Yajra\DataTables\Html\Builder
+     * @return Builder
      */
-    public function html()
+    public function html(): Builder
     {
         return $this->builder()
                     ->setTableId('buyer-table')
@@ -54,14 +71,18 @@ class BuyerDataTable extends DataTable
      *
      * @return array
      */
-    protected function getColumns()
+    protected function getColumns(): array
     {
         return [
-          'id',
+            'id',
             'first_name',
             'last_name',
             'phone_number',
-            'email'
+            'email',
+            'image',
+            "price",
+            "count",
+            'action',
         ];
     }
 
@@ -70,7 +91,7 @@ class BuyerDataTable extends DataTable
      *
      * @return string
      */
-    protected function filename()
+    protected function filename(): string
     {
         return 'Buyer_' . date('YmdHis');
     }

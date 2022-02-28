@@ -13,11 +13,13 @@ class BuyerProductFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
+        $buyers = Buyer::query()->get();
+        $products = Product::query()->get();
         return [
-            'buyer_id' => Buyer::factory(),
-            'product_id' => Product::factory(),
+            'buyer_id' => $buyers->random(),
+            'product_id' => $products->random(),
         ];
     }
 }
