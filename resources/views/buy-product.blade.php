@@ -26,7 +26,7 @@
                         <td>{{$product->product_name}}</td>
                         <td>{{$product->price}}</td>
                         <td>{{$product->sku_code}}</td>
-                        <td><img src="{{$product->id}}" alt="image"></td>
+                        <td><img src="{{asset('storage/'.$product->image)}}" width="40" height="40" alt="" /></td>
                         <td>
                             <form action="{{route('buyer-product.store')}}" method="POST">
                                 @csrf
@@ -39,6 +39,7 @@
                     @endforeach
                 </tbody>
             </table>
+            {{ $products->links() }}
     </section>
 @endsection
 

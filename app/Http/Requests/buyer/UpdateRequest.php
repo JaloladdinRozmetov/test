@@ -29,14 +29,14 @@ class UpdateRequest extends FormRequest
         return [
             'first_name' => ['required','max:256'],
             'last_name' => ['required'],
-            'phone_number' => ['required', PhoneRule::class],
+            'phone_number' => ['required', new PhoneRule],
             'email' => ['required', 'email'],
             'image' => [
                 'required',
                 'image',
                 'mimes:jpeg,png',
                 'max:5120',
-//                'dimensions:width=300,height=300'
+                'dimensions:width=300,height=300'
             ],
         ];
     }

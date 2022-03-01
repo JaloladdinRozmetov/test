@@ -21,7 +21,7 @@ class BuyerProductController extends Controller
     public function index($id)
     {
         $buyer_id = $id;
-        $products = Product::query()->get();
+        $products = Product::query()->paginate(20);
         return view('buy-product',compact('buyer_id','products'));
     }
 

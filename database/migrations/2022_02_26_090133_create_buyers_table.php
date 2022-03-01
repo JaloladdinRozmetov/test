@@ -18,10 +18,9 @@ class CreateBuyersTable extends Migration
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
             $table->string('phone_number',45)->unique();
-            $table->string('email')->unique();
+            $table->string('email')->nullable();
             $table->string('image')->nullable();
-            $table->string('code')->unique();
-            
+            $table->string('code');
             $table->foreignId('admin_created_id')->nullable()->constrained('users')
                 ->onCreate('cascade');
             $table->foreignId('admin_updated_id')->nullable()->constrained('users')

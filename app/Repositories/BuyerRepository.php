@@ -20,7 +20,8 @@ class BuyerRepository
      */
     public function store($request):array
     {
-
+        $nameImage = $request->file('image')->store('public/buyers');
+        $nameImage = ltrim($nameImage, 'public');
         $data = [
             'first_name' => $request->first_name,
             'code' => rand(1000000000,9999999999),
@@ -29,7 +30,7 @@ class BuyerRepository
             'phone_number' =>$request->phone_number,
             'admin_created_id' => auth()->id(),
             'admin_updated_id' => auth()->id(),
-            'image'=>''
+            'image'=>$nameImage
         ];
         $items   = Buyer::create($data);
         return [
@@ -61,13 +62,20 @@ class BuyerRepository
     public function update($request, $id):array
     {
         $item = Buyer::findOrFail($id);
+        $nameImage = $item->image;
+        if ($request->file('image')) {
+            $nameImage = $request->file('image')->store('public/buyers');
 
+            $nameImage = ltrim($nameImage, 'public');
+            $item->image = $nameImage;
+        }
         $data = [
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
             'email' => $request->email,
             'phone_number' => $request->phone_number,
             'admin_updated_id' => auth()->id(),
+            'image' => $nameImage
         ];
         $item->update($data);
         return [

@@ -33,7 +33,7 @@ class UpdateRequest extends FormRequest
                 'image',
                 'mimes:jpeg,png',
                 'max:5120',
-//                'dimensions:width=300,height=300'
+                'dimensions:width=300,height=300'
             ],
         ];
     }

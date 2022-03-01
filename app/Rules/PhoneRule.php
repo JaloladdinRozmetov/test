@@ -39,6 +39,6 @@ class PhoneRule implements Rule
      */
     public function message()
     {
-        return 'The validation error message.';
+        return 'Your phone number must be like Canada phone number.';
     }
 }

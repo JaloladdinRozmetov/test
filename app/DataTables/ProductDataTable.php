@@ -21,14 +21,18 @@ class ProductDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
+            ->addColumn('image', function ($artist) {
+                $url= asset('storage/'.$artist->image);
+                return "<img src='{$url}' border='0' width='40' height='40' class='img-rounded' align='center' />";})
             ->addColumn('action', function($row)
             {
                 $urlDelete = route('product.destroy',['id' => $row->id]);
                 $urlUpdate = route("product.edit", ['id' => $row->id]);
                 return "<a href='{$urlUpdate}' class='edit btn btn-success btn-sm'>Edit</a>
                         <a href='{$urlDelete}' class='delete btn btn-danger btn-sm'>Delete</a>";
-            });
-    }
+            })
+            ->rawColumns(['image','action']);
+             }
 
     /**
      * Get query source of dataTable.
@@ -67,6 +71,7 @@ class ProductDataTable extends DataTable
             'product_name',
             'sku_code',
             'price',
+            'image',
             'action',
         ];
     }

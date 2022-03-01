@@ -7,7 +7,6 @@ namespace App\Repositories;
 use App\Http\Requests\product\CreateRequest;
 use App\Http\Requests\product\UpdateRequest;
 use App\Models\Product;
-use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class ProductRepository
@@ -20,13 +19,15 @@ class ProductRepository
      */
     public function store($request):array
     {
+        $nameImage = $request->file('image')->store('public/products');
+        $nameImage = ltrim($nameImage, 'public');
         $data = [
             'product_name' => $request->product_name,
             'sku_code' => Str::random(5).rand(0, 9),
             'price' => $request->price,
             'admin_created_id' => auth()->id(),
             'admin_updated_id' => auth()->id(),
-            'image'=>''
+            'image'=>$nameImage,
         ];
         $items   = Product::create($data);
         return [
@@ -58,11 +59,19 @@ class ProductRepository
     public function update(UpdateRequest $request, $id):array
     {
         $item = Product::query()->findOrFail($id);
+        $nameImage = $item->image;
 
+        if ($request->file('image')) {
+            $nameImage = $request->file('image')->store('public/products');
+
+            $nameImage = ltrim($nameImage, 'public');
+            $item->image = $nameImage;
+        }
         $data = [
             'product_name' => $request->product_name,
             'price' => $request->price,
             'admin_updated_id' => auth()->id(),
+            'image' => $nameImage,
         ];
         $item->update($data);
         return [

@@ -36,7 +36,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="phone_number">Phone Number</label>
-                                <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="Phone Number" required/>
+                                <input type="number" class="form-control" id="phone_number" name="phone_number" placeholder="Phone Number" required/>
                             </div>
                             <div class="form-group">
                                 <label for="image">Image</label>

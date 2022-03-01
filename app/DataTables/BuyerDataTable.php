@@ -18,6 +18,9 @@ class BuyerDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
+            ->addColumn('image', function ($artist) {
+                $url= asset('storage/'.$artist->image);
+                return "<img src='{$url}' border='0' width='40' height='40' class='img-rounded' align='center' />";})
             ->addColumn('count', function (Buyer $buyer) {
                 return $buyer->buyerProducts->map(function (BuyerProduct $buyerProduct) {
                     return $buyerProduct->products->id;
@@ -36,7 +39,8 @@ class BuyerDataTable extends DataTable
                 return "<a href='{$urlProduct}' class='edit btn btn-primary btn-sm'><i class='fa fa-plus-circle'></i></a>
                         <a href='{$urlUpdate}' class='edit btn btn-success btn-sm'>Edit</a>
                         <a href='{$urlDelete}' class='delete btn btn-danger btn-sm'>Delete</a>";
-            });
+            })
+            ->rawColumns(['image','action']);
     }
 
     /**
@@ -77,6 +81,7 @@ class BuyerDataTable extends DataTable
             'last_name',
             'phone_number',
             'email',
+            'image',
             "price",
             "count",
             'action',

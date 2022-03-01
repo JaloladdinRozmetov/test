@@ -34,9 +34,10 @@
                             <input type="hidden" value="{{ old('sku_code',$item->sku_code) }}" name="sku_code"/>
                             <div class="form-group">
                                 <label for="image">Image</label>
+                                <img src="{{asset('storage/'.$item->image)}}" width="40" height="40" alt="">
                                 <div class="input-group">
                                     <div class="custom-file">
-                                        <input type="file" class="custom-file-input" value="{{ old('image',$item->image) }}" name="image" id="image" required>
+                                        <input type="image" class="custom-file-input" value="{{ old('image',$item->image) }}" name="image" id="image">
                                         <label class="custom-file-label" for="image">Choose file</label>
                                     </div>
                                     <div class="input-group-append">
