@@ -14,7 +14,7 @@ class BuyerProductSeeder extends Seeder
      */
     public function run()
     {
-        BuyerProduct::factory(30)
+        BuyerProduct::factory(1000)
             ->create();
     }
 }
