@@ -22,7 +22,7 @@ class ProductController extends Controller
 
     public function index(ProductDataTable $dataTable)
     {
-        return $dataTable->render('products.product');
+        return $dataTable->render('table');
     }
 
     /**

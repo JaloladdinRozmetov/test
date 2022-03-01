@@ -1,12 +1,12 @@
 <?php
 
 
-namespace App\Http\Requests\product;
+namespace App\Http\Requests\buyProduct;
 
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateRequest extends FormRequest
+class BuyProductRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,15 +26,8 @@ class CreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'product_name' => ['required','max:256'],
-            'price' => ['required'],
-            'image' => [
-                'required',
-                'image',
-                'mimes:jpeg,png',
-                'max:5120',
-//                'dimensions:width=300,height=300'
-            ],
+            'product_id' => ['required'],
+            'buyer_id' => ['required'],
         ];
     }
 
@@ -46,10 +39,9 @@ class CreateRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'product_name' => 'product_name',
-            'sku_code' => 'SKU code',
-            'price' => 'Price',
-            'image' => 'Image',
+            'product_id' => 'Product Id',
+            'buyer_id' => 'Buyer Id',
         ];
     }
+
 }

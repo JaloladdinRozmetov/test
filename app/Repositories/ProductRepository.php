@@ -22,8 +22,8 @@ class ProductRepository
             'product_name' => $request->product_name,
             'sku_code' => '',
             'price' => $request->price,
-            'admin_created_id' => auth()->id(),
-            'admin_updated_id' => auth()->id(),
+            'admin_created_id' => auth()->user()->id,
+            'admin_updated_id' => auth()->user()->id,
             'image'=>''
         ];
         $items   = Product::create($data);

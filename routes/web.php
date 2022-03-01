@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BuyerController;
+use App\Http\Controllers\BuyerProductController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -41,5 +42,10 @@ Route::group(['middleware' => ['auth','admin']], function () {
         Route::post('/{id}/update', 'update')->name('update');
         Route::get('/{id}/show', 'show')->name('show');
         Route::get('/{id}', 'destroy')->name('destroy');
+    });
+    Route::controller(BuyerProductController::class)->prefix('buyer-product')->as('buyer-product.')->group(function()
+    {
+        Route::get('/{id}/product','index')->name('index');
+        Route::post('/store','store')->name('store');
     });
 });

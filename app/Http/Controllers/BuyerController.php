@@ -28,7 +28,7 @@ class BuyerController extends Controller
 //        $a1 = array_map( function($value){return $value['buyer_id'];}, BuyerProduct::query()->select('buyer_id')->get()->toArray());
 
 //        dd(Buyer::query()->whereNotIn('id', $a1)->get());
-        return $dataTable->render('buyers.buyer');
+        return $dataTable->render('table');
     }
 
     /**

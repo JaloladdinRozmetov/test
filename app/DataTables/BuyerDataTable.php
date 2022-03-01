@@ -23,10 +23,6 @@ class BuyerDataTable extends DataTable
                     return $buyerProduct->products->id;
                 })->count();
             })
-            ->addColumn('image', function (Buyer $buyer) {
-                $asset = asset('buyer/'.$buyer->image);
-                return "<img src='{$asset}' class='img-circle'>";
-            })
             ->addColumn('price', function (Buyer $buyer) {
                 return $buyer->buyerProducts->map(function (BuyerProduct $buyerProduct) {
                     return $buyerProduct->products->price;
@@ -36,7 +32,9 @@ class BuyerDataTable extends DataTable
             {
                 $urlDelete = route('buyer.destroy',['id' => $row->id]);
                 $urlUpdate = route("buyer.edit", ['id' => $row->id]);
-                return "<a href='{$urlUpdate}' class='edit btn btn-success btn-sm'>Edit</a>
+                $urlProduct = route("buyer-product.index", ['id' => $row->id]);
+                return "<a href='{$urlProduct}' class='edit btn btn-primary btn-sm'><i class='fa fa-plus-circle'></i></a>
+                        <a href='{$urlUpdate}' class='edit btn btn-success btn-sm'>Edit</a>
                         <a href='{$urlDelete}' class='delete btn btn-danger btn-sm'>Delete</a>";
             });
     }
@@ -79,7 +77,6 @@ class BuyerDataTable extends DataTable
             'last_name',
             'phone_number',
             'email',
-            'image',
             "price",
             "count",
             'action',
