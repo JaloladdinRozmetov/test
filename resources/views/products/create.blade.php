@@ -25,17 +25,18 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="product_name">Name</label>
-                                <input type="text" class="form-control" name="product_name" id="product_name" placeholder="Product Name" required>
+                                <input type="text" class="form-control" name="product_name"  id="product_name" placeholder="Product Name" required>
                             </div>
                             <div class="form-group">
                                 <label for="price">Price</label>
-                                <input type="number" class="form-control" id="price" name="price"placeholder="Price" required/>
+                                <input type="number" class="form-control"  id="price" name="price" placeholder="Price" required/>
                             </div>
+                            <input type="hidden" name="sku_code"/>
                             <div class="form-group">
                                 <label for="image">Image</label>
                                 <div class="input-group">
                                     <div class="custom-file">
-                                        <input type="file" class="custom-file-input" name="image" id="image" required>
+                                        <input type="file" class="custom-file-input"  name="image" id="image" required>
                                         <label class="custom-file-label" for="image">Choose file</label>
                                     </div>
                                     <div class="input-group-append">
