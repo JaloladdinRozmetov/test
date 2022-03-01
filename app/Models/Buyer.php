@@ -20,7 +20,7 @@ class Buyer extends Model
 
     protected $table = 'buyers';
 
-    protected $fillable = ["first_name", "last_name", "phone_number","email","image","code"];
+    protected $fillable = ["first_name", "last_name", "phone_number","email","image","code","admin_created_id","admin_updated_id"];
 
     public function buyerProducts(): HasMany
     {

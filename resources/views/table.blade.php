@@ -11,9 +11,15 @@
                 {{Session::get('success')}}
             </div>
         @endif
+        @if(request()->url() == route('product.index'))
         <div>
             <a href="{{route('product.create')}}" class="btn btn-success m-2">Create</a>
         </div>
+            @else
+                <div>
+                    <a href="{{route('buyer.create')}}" class="btn btn-success m-2">Create</a>
+                </div>
+            @endif
         <div class="col-md-12">
             {!! $dataTable->table() !!}
         </div>

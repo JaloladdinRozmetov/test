@@ -26,7 +26,7 @@ class Product extends Model
 
     protected $table = 'products';
 
-    protected $fillable = ["product_name","price","sku_code","image"];
+    protected $fillable = ["product_name","price","sku_code","image","admin_created_id","admin_updated_id"];
 
     public function buyerProducts(): HasMany
     {

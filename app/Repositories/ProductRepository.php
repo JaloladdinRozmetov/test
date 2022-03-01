@@ -5,8 +5,10 @@ namespace App\Repositories;
 
 
 use App\Http\Requests\product\CreateRequest;
+use App\Http\Requests\product\UpdateRequest;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ProductRepository
 {
@@ -20,10 +22,10 @@ class ProductRepository
     {
         $data = [
             'product_name' => $request->product_name,
-            'sku_code' => '',
+            'sku_code' => Str::random(5).rand(0, 9),
             'price' => $request->price,
-            'admin_created_id' => auth()->user()->id,
-            'admin_updated_id' => auth()->user()->id,
+            'admin_created_id' => auth()->id(),
+            'admin_updated_id' => auth()->id(),
             'image'=>''
         ];
         $items   = Product::create($data);
@@ -49,17 +51,16 @@ class ProductRepository
     /**
      * Update the specified resource in storage.
      *
-     * @param  Request  $request
-     * @param  int  $id
+     * @param UpdateRequest $request
+     * @param int $id
      * @return array
      */
-    public function update($request, $id):array
+    public function update(UpdateRequest $request, $id):array
     {
-        $item = Product::findOrFail($id);
+        $item = Product::query()->findOrFail($id);
 
         $data = [
             'product_name' => $request->product_name,
-            'sku_code' => $request->sku_code,
             'price' => $request->price,
             'admin_updated_id' => auth()->id(),
         ];
@@ -70,12 +71,11 @@ class ProductRepository
     }
 
 
-
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return object
+     * @param int $id
+     * @return bool
      */
     public function destroy($id):bool
     {
@@ -83,7 +83,7 @@ class ProductRepository
         $delete->save();
 
 
-        return $delete->delete();;
+        return $delete->delete();
 
     }
 

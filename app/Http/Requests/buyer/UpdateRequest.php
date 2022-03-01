@@ -4,6 +4,7 @@
 namespace App\Http\Requests\buyer;
 
 
+use App\Rules\PhoneRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateRequest extends FormRequest
@@ -28,14 +29,14 @@ class UpdateRequest extends FormRequest
         return [
             'first_name' => ['required','max:256'],
             'last_name' => ['required'],
-            'phone_number' => ['required'],
-            'email' => ['required'],
+            'phone_number' => ['required', PhoneRule::class],
+            'email' => ['required', 'email'],
             'image' => [
                 'required',
                 'image',
                 'mimes:jpeg,png',
                 'max:5120',
-                'dimensions:width=300,height=300'
+//                'dimensions:width=300,height=300'
             ],
         ];
     }

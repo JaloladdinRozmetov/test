@@ -7,7 +7,7 @@ namespace App\Repositories;
 use App\Http\Requests\buyer\CreateRequest;
 use App\Http\Requests\buyer\UpdateRequest;
 use App\Models\Buyer;
-
+use Illuminate\Support\Str;
 
 
 class BuyerRepository
@@ -20,9 +20,10 @@ class BuyerRepository
      */
     public function store($request):array
     {
+
         $data = [
             'first_name' => $request->first_name,
-            'code' => '',
+            'code' => rand(1000000000,9999999999),
             'last_name' => $request->last_name,
             'email' => $request->email,
             'phone_number' =>$request->phone_number,
